@@ -8,7 +8,10 @@ dew api trading use python.
     #a,b为业务参数。
 
 ### a.参数进行字典排序
-    #以下为java代码，暂未改为python
-    Collection<String> keyset= params.keySet();  
-    List<String> list=new ArrayList<String>(keyset); 
-    Collections.sort(list);
+    #为java代码，below为python
+    #Collection<String> keyset= params.keySet();  
+    keyset = params.keys()
+    #List<String> list=new ArrayList<String>(keyset); 
+    list_keyset = list(keyset)
+    #Collections.sort(list);
+    list_keyset.sort()
