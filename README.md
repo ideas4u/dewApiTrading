@@ -15,3 +15,15 @@ dew api trading use python.
     list_keyset = list(keyset)
     #Collections.sort(list);
     list_keyset.sort()
+### b.参数k-v字符串生成
+    #以下为java代码
+    String signString = "" ;     
+    for( String key : list ){
+	    String split = "".equals(signString)?"":"&" ;
+	    signString += split+ key+"="+params.get(key) ;
+    }
+    signString = signString+"&secretKey="+apiSecret;    //API_SECRET
+    # 以下为python代码
+    singString = ""
+    for key in list_keyset:
+        
