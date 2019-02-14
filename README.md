@@ -47,6 +47,24 @@ dew api trading use python.
 	        sign =  ret.toString();
     }
     #以下为python代码
+    from hashlib import md5
+    sign = ""
+    try:
 
+
+### d. 封装参数发起POST请求
+    #以下为java代码
+    Map<String,String> reqParams =  new HashMap<String, String>() ;
+    reqParams.put("apiKey", apiKey) ;    // API_KEY
+    reqParams.put("a", a) ;              //业务参数。。。
+    reqParams.put("b", b) ; 
+    ...... 
+    reqParams.put("tonce", current.toString());
+    reqParams.put("sign",sign) ;         //MD5签名
+    String result = send(url,reqParams, "UTF-8");
+    #以下为python代码
+    import requests
+    reqParams = {"apiKey": apiKey,"a":a,"b":b,"tonce":str(current_milli_time()),"sign":sign}
+    
 
         
