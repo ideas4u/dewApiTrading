@@ -1,6 +1,6 @@
 # dewApiTrading
 dew api trading use python.
-## 1.MD5单重签名请求流程
+## 1.MD5单重签名请求流程示例
 
     import time
     current_milli_time = lambda: int(round(time.time() * 1000))
