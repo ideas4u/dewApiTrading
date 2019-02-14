@@ -24,6 +24,28 @@ dew api trading use python.
     }
     signString = signString+"&secretKey="+apiSecret;    //API_SECRET
     # 以下为python代码
-    singString = ""
+    signString = ""
     for key in list_keyset:
+        split = "" if signString == "" else "&"
+        signString += split + key + "=" + params.get(key)
+    signString = signString+"&secretKey="+apiSecret #API_SECRET
+
+
+### c.基于UTF-8编码的MD5加密，生成校验字符串sign
+    #以下为java代码
+    String sign = "";
+    try {
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        byte[] bytes = md.digest(signString.getBytes("utf-8"));
+        final char[] HEX_DIGITS = "0123456789abcdef".toCharArray();
+	        StringBuilder ret = new StringBuilder(bytes.length * 2);
+	        for (int i=0; i<bytes.length; i++) {
+		        ret.append(HEX_DIGITS[(bytes[i] >> 4) & 0x0f]);
+		        ret.append(HEX_DIGITS[bytes[i] & 0x0f]);
+	        }
+	        sign =  ret.toString();
+    }
+    #以下为python代码
+    
+
         
