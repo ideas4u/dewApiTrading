@@ -8,12 +8,13 @@ dew api trading use python.
     #a,b为业务参数。
 
 ### a.参数进行字典排序
-    #为java代码，below为python
-    #Collection<String> keyset= params.keySet();  
+    #为java代码，
+    Collection<String> keyset= params.keySet(); 
+    List<String> list=new ArrayList<String>(keyset);  
+    Collections.sort(list);
+    #以下为python
     keyset = params.keys()
-    #List<String> list=new ArrayList<String>(keyset); 
     list_keyset = list(keyset)
-    #Collections.sort(list);
     list_keyset.sort()
 ### b.参数k-v字符串生成
     #以下为java代码
@@ -46,6 +47,6 @@ dew api trading use python.
 	        sign =  ret.toString();
     }
     #以下为python代码
-    
+
 
         
