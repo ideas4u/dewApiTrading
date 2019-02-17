@@ -1,5 +1,9 @@
 # dewApiTrading
 dew api trading use python.
+欢迎使用35%佣金返佣链：
+https://act.dew.one/borker/index.html?code=69604741
+微信联系：313751369
+dew官方聊天室联系：快乐交易或记住是交易全世界
 ## 1.MD5单重签名请求流程示例
 
     import time
