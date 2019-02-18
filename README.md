@@ -54,6 +54,9 @@ dew官方聊天室联系：快乐交易或记住是交易全世界
     from hashlib import md5
     sign = ""
     try:
+        bytes_signString = bytes(signString,'utf-8')
+        digest = md5(bytes_signString).digest()
+        HEX_DIGITS = ""
 
 
 ### d. 封装参数发起POST请求
