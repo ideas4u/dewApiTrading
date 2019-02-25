@@ -89,7 +89,7 @@ dew 官方聊天室联系：快乐交易或记住是交易全世界
     reqParams.put("sign",sign) ;         //MD5签名
     String result = send(url,reqParams, "UTF-8");
     #以下为python代码
-    import requests
+    #import requests 暂时不需要这个库，send是自已写的请求函数。
     reqParams = {"apiKey": apiKey,"a":a,"b":b,"tonce":str(current_milli_time()),"sign":sign}
     result = send(url,reqParams,"UTF-8")
 
@@ -185,4 +185,84 @@ dew 官方聊天室联系：快乐交易或记住是交易全世界
             ret = ret + HEX_DIGITS[bytes_signString1[item] & 0x0f]
         sign = ret
     
+### f.封装参数发起POST请求
+    #以下为java
+    Map<String,String> reqParams =  new HashMap<String, String>() ;
+    reqParams.put("apiKey", apiKey) ;    // API_KEY
+    reqParams.put("a", a) ;              //业务参数。。。
+    reqParams.put("b", b) ; 
+    ...... 
+    reqParams.put("tonce", current.toString());
+    reqParams.put("presign",presign);     //ETH私钥签名 
+    reqParams.put("sign",sign) ;          //MD5签名
+    String result = send(url,reqParams, "UTF-8");
+
+
+    // ETH私钥验证，需要用到web3j包
+    public  static String  ethSign(String passPhrase,String keystore,String signString){
+	try {
+		ObjectMapper objectMapper = ObjectMapperFactory.getObjectMapper();
+		JsonParser parser = objectMapper.getFactory().createParser(keystore);
+		WalletFile walletFile = objectMapper.readValue(parser, WalletFile.class);
+		Credentials cred = Credentials.create(Wallet.decrypt(passPhrase, walletFile));
+		ECKeyPair ecKeyPair = cred.getEcKeyPair() ;
+		SignatureData sd = Sign.signMessage( signString.getBytes() , ecKeyPair ) ;
+		byte[] bytes = new byte[1+32+32];
+		bytes[0] = sd.getV();
+		System.arraycopy( sd.getR() , 0, bytes, 1, 32);
+		System.arraycopy(sd.getS(), 0, bytes, 33, 32);
+		String sign = Hex.toHexString(bytes);
+		return sign ;
+	} catch (IOException e) {
+		e.printStackTrace();
+	} catch (CipherException e) {
+		e.printStackTrace();
+	}
+	return null ;
+    }
+
+    // 发起HTTP POST请求
+    public static String send(String url, Map<String, String> map, String encoding){
+		String body = "";
+		CloseableHttpResponse response = null;
+		try {
+			CloseableHttpClient client = HttpClients.createDefault();
+			HttpPost httpPost = new HttpPost(url);
+			List<NameValuePair> nvps = new ArrayList<NameValuePair>();
+			if (map != null) {
+				for (Entry<String, String> entry : map.entrySet()) {
+					nvps.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
+				}
+			}
+			httpPost.setEntity(new UrlEncodedFormEntity(nvps, encoding));
+			httpPost.setHeader("Content-type", "application/x-www-form-urlencoded");
+			httpPost.setHeader("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");
+
+			response = client.execute(httpPost);
+			HttpEntity entity = response.getEntity();
+			if (entity != null) {
+				body = EntityUtils.toString(entity, encoding);
+			}
+			EntityUtils.consume(entity);
+		} catch (IOException e) {
+
+		} finally {
+			if (response != null) {
+				try {
+					response.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return body;
+    }  
+    #以下为python
+    reqParams = {"apiKey":apiKey,"a":a,"b":b,"tonce":str(current_milli_time()),"presign":presign,"sign":sign}
+    result = send(url,reqParams,"UTF-8")
     
+    #// ETH私钥验证，需要用到web3.py包
+    from web3 import Web3,HTTPProvider
+    import web3
+    def ethSign(passPhrase,keystore,signString):
+        
