@@ -10,3 +10,4 @@ for item in range(len(bytes_signString)):
     ret = ret + HEX_DIGITS[bytes_signString[item] & 0x0f]
 sign = ret
 print(sign)
+print(type(sign))

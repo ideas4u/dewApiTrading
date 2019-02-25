@@ -1,13 +1,22 @@
 # dewApiTrading
 
-dew api trading use python.<br>
+dew api trading using python.<br>
 欢迎使用 35%佣金返佣链：
 https://act.dew.one/borker/index.html?code=69604741<br>
 微信联系：313751369<br>
 dew 官方聊天室联系：快乐交易或记住是交易全世界
 
+# API请求流程示例
 ## 1.MD5 单重签名请求流程示例
-
+    #以下为java
+    Long current = System.currentTimeMillis();
+    Map<String,String> params =  new HashMap<String, String>() ;
+    params.put("apiKey", apiKey) ;    // API_KEY
+    params.put("a", a);               //业务参数。。。
+    params.put("b", b);
+    ......
+    params.put("tonce", current.toString());
+    #以下为python
     import time
     current_milli_time = lambda: int(round(time.time() * 1000))
     params = {"apiKey":apiKey,"a",a,"b":b,"tonce":str(current_milli_time())}
