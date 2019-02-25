@@ -138,4 +138,51 @@ dew 官方聊天室联系：快乐交易或记住是交易全世界
     params = {"apiKey":apiKey,"a",a,"b":b,"tonce":str(current_milli_time()),"presign":presign}
 
 ### d.对照步骤a、b，对param再次进行字典排序并生成字符串
+    #以下为java
+    Collection<String> keyset1= params.keySet();  
+    List<String> list1=new ArrayList<String>(keyset1); 
+    Collections.sort(list1); 
+    String signString1 = "" ;     
+    for( String key : list1 ){
+	    String split = "".equals(signString1)?"":"&" ;
+	    signString1 += split+ key+"="+params.get(key) ;
+    }
+    signString1 = signString1+"&secretKey="+apiSecret;   //API_SECRET
+    #以下为python
+    keyset1 = params.keys()
+    list1_keyset = list(keyset1)
+    list1_keyset.sort()
+    signString1 = ""
+    for key in list1_keyset:
+        split = "" if signString1 == "" else "&"
+        signString1 += split + key + "=" + params.get(key)
+    signString1 = signString1+"&secretKey="+apiSecret #API_SECRET
 
+### e.基于UTF-8编码的MD5
+    #以下为java
+    String sign = "";
+    try {
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        byte[] bytes = md.digest(signString1.getBytes("utf-8"));
+        final char[] HEX_DIGITS = "0123456789abcdef".toCharArray();
+	    StringBuilder ret = new StringBuilder(bytes.length * 2);
+	    for (int i=0; i<bytes.length; i++) {
+		ret.append(HEX_DIGITS[(bytes[i] >> 4) & 0x0f]);
+		ret.append(HEX_DIGITS[bytes[i] & 0x0f]);
+	}
+	    sign =  ret.toString();
+    }
+    #以下为python
+    from hashlib import md5
+    sign = ""
+    try:
+        bytes_signString1 = bytes(signString1,'utf-8')
+        digest = md5(bytes_signString1).digest()
+        HEX_DIGITS = "0123456789abcdef"
+        ret = ""
+        for item in range(len(bytes_signString1)):
+            ret = ret + HEX_DIGITS[(bytes_signString1[item] >> 4 & 0x0f)]
+            ret = ret + HEX_DIGITS[bytes_signString1[item] & 0x0f]
+        sign = ret
+    
+    
