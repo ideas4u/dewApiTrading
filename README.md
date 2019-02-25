@@ -19,7 +19,11 @@ dew 官方聊天室联系：快乐交易或记住是交易全世界
     #以下为python
     import time
     current_milli_time = lambda: int(round(time.time() * 1000))
-    params = {"apiKey":apiKey,"a",a,"b":b,"tonce":str(current_milli_time())}
+    params = {"apiKey":apiKey,
+        "a",a,
+        "b":b,
+        "tonce":str(current_milli_time())
+        }
     #a,b为业务参数。
 
 ### a.参数进行字典排序
@@ -110,7 +114,11 @@ dew 官方聊天室联系：快乐交易或记住是交易全世界
     #以下为python
     import time
     current_milli_time = lambda: int(round(time.time() * 1000))
-    params = {"apiKey":apiKey,"a",a,"b":b,"tonce":str(current_milli_time())}
+    params = {"apiKey":apiKey,
+        "a",a,
+        "b":b,
+        "tonce":str(current_milli_time())
+        }
     #a,b为业务参数。
     keyset = params.keys()
     list_keyset = list(keyset)
@@ -135,7 +143,11 @@ dew 官方聊天室联系：快乐交易或记住是交易全世界
     param.put("presign", presign);
     #以下为python
     presign = ethSign(password,keystore,signString) #具体方法在后面列出
-    params = {"apiKey":apiKey,"a",a,"b":b,"tonce":str(current_milli_time()),"presign":presign}
+    params = {"apiKey":apiKey,
+        "a",a,
+        "b":b,
+        "tonce":str(current_milli_time()),
+        "presign":presign}
 
 ### d.对照步骤a、b，对param再次进行字典排序并生成字符串
     #以下为java
@@ -258,11 +270,16 @@ dew 官方聊天室联系：快乐交易或记住是交易全世界
 		return body;
     }  
     #以下为python
-    reqParams = {"apiKey":apiKey,"a":a,"b":b,"tonce":str(current_milli_time()),"presign":presign,"sign":sign}
+    reqParams = {"apiKey":apiKey,
+        "a":a,
+        "b":b,
+        "tonce":str(current_milli_time()),
+        "presign":presign,
+        "sign":sign}
     result = send(url,reqParams,"UTF-8")
     
     #// ETH私钥验证，需要用到web3.py包
     from web3 import Web3,HTTPProvider
     import web3
     def ethSign(passPhrase,keystore,signString):
-        
+
